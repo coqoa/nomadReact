@@ -14,13 +14,16 @@
         function App(){
             const [counter, setCounter] = React.useState(0);
             const onClick = () => {
-                setCounter(counter + 1);
+                // setCounter(counter + 1);
+                setCounter((current) => current + 1);
             };
+            console.log("rerenderd") // modifier함수를 가지고 state를 변경하면 컴포넌트가 재생성되므로 한번 더 실행(리렌더링)된다. - 아래의 return도 한번 더 생성되지만 변경된 값을 가지고 생성된다
+            console.log(counter)
             return(
                 <div>
                     <h3>Total click: {counter}</h3>
                     <button onClick={onClick}>Click me</button>
-                </div>
+                </div> 
             );
         }
         ReactDOM.render(<App />, root);
