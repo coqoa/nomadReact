@@ -5,27 +5,51 @@
     <div id="root"></div>
 </body>
 
-<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<!-- <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script> -->
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <script type="text/babel">
-        const root = document.getElementById("root")
         function App(){
-            const [counter, setCounter] = React.useState(0);
-            const onClick = () => {
-                // setCounter(counter + 1);
-                setCounter((current) => current + 1);
+            const [minutes, setMinutes] = React.useState(0);
+            const onChange = (event) => {
+                // console.log(event.target.value)
+                setMinutes(event.target.value)
             };
-            console.log("rerenderd") // modifier함수를 가지고 state를 변경하면 컴포넌트가 재생성되므로 한번 더 실행(리렌더링)된다. - 아래의 return도 한번 더 생성되지만 변경된 값을 가지고 생성된다
-            console.log(counter)
+            const reset = () => setMinutes(0);
             return(
                 <div>
-                    <h3>Total click: {counter}</h3>
-                    <button onClick={onClick}>Click me</button>
+                    <h1>Super Converter</h1>
+                    <div>
+                        <div>
+                            <label htmlFor="minutes">Minutes</label>
+                            <input 
+                            value={minutes} 
+                            id="minutes" 
+                            placeholder="Minutes" 
+                            type="number"
+                            onChange = {onChange}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="hours">Hours</label>
+                            <input 
+                            value={Math.round(minutes/60)} 
+                            id="hours" 
+                            placeholder="Hours"  
+                            type="number"
+                            disabled
+                            // onChange = {onChange} 
+                            />
+                        </div>
+                        <button onClick={reset}>Reset</button>
+                    </div>
                 </div> 
             );
         }
+        const root = document.getElementById("root")
         ReactDOM.render(<App />, root);
     </script>
 </html>
