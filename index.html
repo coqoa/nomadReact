@@ -10,101 +10,38 @@
 <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
 
-    <script type="text/babel">
-        function MinutesToHours(){
-            const [amount, setAmount] = React.useState(0);
-            const [inverted, setInverted] = React.useState(false);
-            const onChange = (event) => {
-                // console.log(event.target.value)
-                setAmount(event.target.value)
-            };
-            const reset = () => setAmount(0);
-            const onInverted = () => {
-                reset();
-                setInverted((current)=>!current)
-            }
-            return(
-                <div>
-                    <div>
-                        <label htmlFor="minutes">Minutes</label>
-                        <input 
-                        value={inverted ? amount * 60 : amount} 
-                        id="minutes" 
-                        placeholder="Minutes" 
-                        type="number"
-                        onChange = {onChange}
-                        disabled = {inverted}
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="hours">Hours</label>
-                        <input 
-                        setFocus
-                        value={inverted ? amount : amount/60} 
-                        id="hours" 
-                        placeholder="Hours"  
-                        type="number"
-                        onChange = {onChange} 
-                        disabled = {!inverted}
-                        />
-                    </div>
-                    <button onClick={reset}>Reset</button>
-                    <button onClick={onInverted}>{inverted ? "H -> M" : "M -> H"}</button>
-                </div>
-            );
+    function Btn({text}){
+        const BtnClick = (e) => {
+            console.log(e.target.innerHTML)
         }
+        return(
+            <button 
+                onClick={BtnClick}
+                style ={{
+                    backgroundColor:"tomato",
+                    color:"white",
+                    padding: "10px 20px",
+                    border: 0,
+                    borderRadius: 10,
+                }}
+            >
+            {text}
+            </button>
+        )
+    }
 
-        function ExchangeCurrency(){
-            const [currency, setCurrency] = React.useState(0);
-            const [inverted, setInverted] = React.useState(false);
-            
-            const onFocus = (e) => e.target.value = '';
-            const Exchange = (e) =>{
-                setCurrency(e.target.value)
-            }
-            const Inverted = () => {
-                {inverted === false ? setInverted(true) : setInverted(false)}
-            }
-            return (
-                <div>
-                    <h3>Exchange Currency</h3>
-                    <input 
-                        type = "number"
-                        onFocus = {onFocus}
-                        onChange = {Exchange}
-                        placeholder = "Dollar" 
-                        value = {currency}
-                    />  
-                    <div>{inverted === false ? currency*1025+'원' : currency/1025+'$'}</div>
-                    <button onClick={Inverted}>{inverted === false ? 'D => W' : 'W => D'}</button>
-                </div>
-                // 인풋창으로 교차하면서 확인할 수 있도록 바꿔보기(포커스로만 바꿔지도록)
-            ) 
-        }
-
-
-        function App(){
-            const [index, setIndex] = React.useState("greetings");
-            const onSelect = (event) => {
-                setIndex(event.target.value);
-            };
-            return (
-            <div>
-                <h1>Super Converter</h1>
-                <select value={index} onChange={onSelect}>
-                    <option value="greetings">select your units</option>
-                    <option value="0">Minutes & Hours</option>
-                    <option value="1">Exchange Currency</option>
-                </select>
-                <hr />
-                {index === "greetings" ? "Welcome!" : null}
-                {index === "0" ? <MinutesToHours /> : null}
-                {index === "1" ? <ExchangeCurrency /> : null}
-            </div>
-            );
-        }
-        const root = document.getElementById("root")
-        ReactDOM.render(<App />, root);
-    </script>
+    function App(){
+        
+        return (
+        <div>
+            <Btn text="1번"/>    
+            <Btn text="2번"/>    
+        </div>
+        );
+    }
+    const root = document.getElementById("root")
+    ReactDOM.render(<App />, root);
+</script>
 </html>
