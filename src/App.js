@@ -1,34 +1,33 @@
-import { useState, useEffect } from "react";
-
-import Button from"./Button";
-import styles from "./App.module.css";
-import react from "react";
+import { useState} from "react";
 
 function App() {
-  const [counter, setValue] = useState(0);
-  const onClick = () => setValue((prev)=>prev+1);
-  console.log("i run all the time")
-
-  const iRunOnlyOnce =()=>{
-    console.log("I Run Only Once");
-  };
-  useEffect(iRunOnlyOnce, []);
-
+  const [toDo, setToDo] = useState("");
+  const [toDos, setToDos] = useState([]);
+  const onChange = (e) => setToDo(e.target.value)
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if(toDo === ''){
+      return
+    }
+    setToDo("")
+    setToDos((currentArray) =>  [toDo, ...currentArray] )
+    // 기존의 array에 새로운 값을 넣는데 React에서는 직접 toDos 를 변경하지 않고 modify function을 사용한다
+    // setToDos((현재배열) =>  [추가값, ...현재배열] ) 하면 현재배열을 추가값+현재배열까지 합친 배열의 형태로 변경한다
+  }
   return (
-    <react.Fragment>
-      <div>
-        <h1>
-          {counter}
-        </h1>
-        <button onClick={onClick}>click me</button>
-      </div>
-
-      <div>
-        <h1 className={styles.title}>Hello!!!!</h1>
-        <Button text={"Continue"}/>
-      </div>
-    </react.Fragment>
-  );
+    <div>
+      <h1>My To Dos ({toDos.length})</h1>
+      <form onSubmit={onSubmit}>
+        <input onChange={onChange} value={toDo} type="text" placeholder="Writh your to do..." />
+        <button>Add To Do</button>
+      </form>
+      <hr />
+      <ul>
+        {toDos.map((item, index)=><li key={index}>{item}</li>)}
+      </ul>
+    </div>
+  )
 }
+
 
 export default App;
